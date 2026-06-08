@@ -1,0 +1,10 @@
+JobRole,Displacement Score,Risk Tier,Automation Prob,Task Repetitiveness,Dept Adoption
+Sales Representative,69.8,High,0.72,0.65,0.75
+Laboratory Technician,68.4,High,0.69,0.72,0.6
+Human Resources,55.2,Medium,0.55,0.58,0.5
+Sales Executive,50.4,Medium,0.43,0.48,0.7
+Healthcare Representative,38.8,Medium,0.35,0.42,0.4
+Manufacturing Director,35.4,Medium,0.18,0.38,0.65
+Human Resources Director,30.6,Low,0.22,0.32,0.45
+Research Scientist,29.4,Low,0.23,0.28,0.45
+Manager,25.4,Low,0.16,0.3,0.35
