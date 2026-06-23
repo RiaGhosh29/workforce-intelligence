@@ -41,7 +41,7 @@ page = st.sidebar.radio("Navigate", [
 # ══════════════════════════════════════════════════════════════════════
 if page == "📊 Overview":
     st.title("🧠 AI-Assisted Workforce Intelligence")
-    st.markdown("**Predictive Attrition · Layoff Cost Simulation · AI Displacement Scoring**")
+    st.markdown("**Predictive Attrition · Workforce Cost Simulation · AI Displacement Scoring**")
     st.markdown("---")
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("Employees Scored", f"{len(scored):,}")
@@ -118,7 +118,7 @@ elif page == "🔮 Module 1 — Attrition Risk":
 
 # ══════════════════════════════════════════════════════════════════════
 elif page == "💰 Module 2 — Cost Simulator":
-    st.title("💰 Module 2 — Layoff Cost Simulator")
+    st.title("💰 Module 2 — Workforce Cost Simulator")
     st.markdown("Parameterised financial engine grounded in Cascio (2006) and SHRM (2022) benchmarks.")
     st.markdown("---")
 
