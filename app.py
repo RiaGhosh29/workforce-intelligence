@@ -117,7 +117,7 @@ elif page == "🔮 Module 1 — Attrition Risk":
         st.warning(f"SHAP chart unavailable: {e}")
 
 # ══════════════════════════════════════════════════════════════════════
-elif page == "💰 Module 2 — Workforce Cost Simulator":
+elif page == "💰 Module 2 — Cost Simulator":
     st.title("💰 Module 2 — Workforce Cost Simulator")
     st.markdown("Parameterised financial engine grounded in Cascio (2006) and SHRM (2022) benchmarks.")
     st.markdown("---")
