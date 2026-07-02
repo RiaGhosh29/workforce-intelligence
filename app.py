@@ -106,10 +106,11 @@ elif page == "🔮 Module 1 — Attrition Risk":
         mean_shap = pd.Series(
             np.abs(shap_vals).mean(axis=0), index=features
         ).sort_values(ascending=True).tail(15)
-        fig_s = px.bar(mean_shap, orientation='h',
-                       title="Top 15 Features by Mean |SHAP| Value",
-                       labels={'value':'Mean |SHAP|','index':'Feature'})
+        shap_df = pd.DataFrame({'Feature': mean_shap.index, 'Mean |SHAP|': mean_shap.values})
+        fig_s = px.bar(shap_df, x='Mean |SHAP|', y='Feature', orientation='h',
+                       title="Top 15 Features by Mean |SHAP| Value")
         fig_s.update_traces(marker_color='#4472C4')
+        fig_s.update_layout(showlegend=False)
         st.plotly_chart(fig_s, use_container_width=True)
         st.caption("Higher SHAP value = stronger influence on attrition prediction. "
                    "Source: Lundberg and Lee (2017); Lundberg et al. (2020).")
