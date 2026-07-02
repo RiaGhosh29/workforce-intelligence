@@ -1,3 +1,4 @@
+%%writefile app.py
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -41,7 +42,7 @@ page = st.sidebar.radio("Navigate", [
 # ══════════════════════════════════════════════════════════════════════
 if page == "📊 Overview":
     st.title("🧠 AI-Assisted Workforce Intelligence")
-    st.markdown("**Predictive Attrition · Workforce Cost Simulation · AI Displacement Scoring**")
+    st.markdown("**Predictive Attrition · Workforce Cost Simulation · AI Displacement Scoring · Strategic Workforce Prioritisation**")
     st.markdown("---")
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("Employees Scored", f"{len(scored):,}")
@@ -56,7 +57,7 @@ if page == "📊 Overview":
         st.info("**Module 2** — Financial simulator models the cost of attrition and planned restructuring.")
     with col2:
         st.info("**Module 3** — Composite score rates each role's exposure to AI automation.")
-        st.info("**Module 4** — Agile 2×2 matrix combines all three outputs for sprint-based HR planning.")
+        st.info("**Module 4** — Integrated 2×2 matrix translates predictive analytics into actionable workforce priorities.")
 
 # ══════════════════════════════════════════════════════════════════════
 elif page == "🔮 Module 1 — Attrition Risk":
@@ -117,7 +118,7 @@ elif page == "🔮 Module 1 — Attrition Risk":
         st.warning(f"SHAP chart unavailable: {e}")
 
 # ══════════════════════════════════════════════════════════════════════
-elif page == "💰 Module 2 — Cost Simulator":
+elif page == "💰 Module 2 — Workforce Cost Simulator":
     st.title("💰 Module 2 — Workforce Cost Simulator")
     st.markdown("Parameterised financial engine grounded in Cascio (2006) and SHRM (2022) benchmarks.")
     st.markdown("---")
@@ -200,7 +201,7 @@ elif page == "💰 Module 2 — Cost Simulator":
 # ══════════════════════════════════════════════════════════════════════
 elif page == "🤖 Module 3 — AI Displacement":
     st.title("🤖 Module 3 — AI Displacement Risk")
-    st.markdown("Role-level composite score (0–100) combining O\\*NET task data and Frey & Osborne (2017).")
+    st.markdown("Role-level composite score (0–100) combining O\\*NET task data and Frey & Osborne (2017), and department AI adoption weighting.")
     st.markdown("---")
 
     adoption = st.slider("Company AI Adoption Speed", 0.5, 1.5, 1.0, 0.1,
@@ -242,7 +243,7 @@ elif page == "🤖 Module 3 — AI Displacement":
 # ══════════════════════════════════════════════════════════════════════
 elif page == "🎯 Module 4 — 2×2 Matrix":
     st.title("🎯 Module 4 — Strategic 2×2 Prioritisation Matrix")
-    st.markdown("Agile-aligned MoSCoW prioritisation — attrition risk × AI displacement risk.")
+    st.markdown("Integrates attrition risk and AI displacement risk using the Agile-inspired MoSCoW prioritisation framework.")
     st.caption("Based on Clegg and Barker (1994) MoSCoW method and McMackin & Heffernan (2021) Agile HR framework.")
     st.markdown("---")
 
