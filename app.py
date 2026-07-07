@@ -50,13 +50,19 @@ if page == "📊 Overview":
     if 'Quadrant' in scored.columns:
         col4.metric("Double Exposure", f"{(scored['Quadrant']=='Double Exposure').sum()}")
     st.markdown("---")
+    st.markdown("### Framework Overview")
+    st.markdown("The AI-Assisted Workforce Intelligence framework integrates four complementary analytical "
+                "modules to support strategic workforce planning. Together, the modules help organisations "
+                "predict employee attrition, estimate workforce costs, assess AI displacement risk, and "
+                "prioritise workforce actions through an Agile-inspired decision framework.")
+    st.markdown("---")
     col1, col2 = st.columns(2)
     with col1:
-        st.info("**Module 1** — XGBoost model predicts who is likely to leave and explains why via SHAP.")
-        st.info("**Module 2** — Financial simulator models the cost of attrition and planned restructuring.")
+        st.info("**Module 1** — Predictive attrition identifies employees at risk of leaving and explains each prediction using SHAP.")
+        st.info("**Module 2** — Workforce cost simulation estimates the financial impact of employee attrition and restructuring scenarios.")
     with col2:
-        st.info("**Module 3** — Composite score rates each role's exposure to AI automation.")
-        st.info("**Module 4** — Integrated 2×2 matrix translates predictive analytics into actionable workforce priorities.")
+        st.info("**Module 3** — AI displacement scoring evaluates each job role's exposure to AI-driven automation.")
+        st.info("**Module 4** — Agile-inspired 2×2 prioritisation matrix combines all analytical outputs into actionable workforce priorities.")
 
 # ══════════════════════════════════════════════════════════════════════
 elif page == "🔮 Module 1 — Attrition Risk":
