@@ -140,42 +140,77 @@ elif page == "💰 Module 2 — Cost Simulator":
         st.markdown("Estimates total replacement cost for employees flagged as high attrition risk.")
         col1, col2 = st.columns(2)
         with col1:
-            recruit_pct   = st.slider("Recruitment cost (% of annual salary)", 10, 40, 15) / 100
-            assess_pct    = st.slider("Assessment cost (% of annual salary)",   2,  15,  5) / 100
-            onboard_pct   = st.slider("Onboarding cost (% of annual salary)",   5,  25, 10) / 100
+            recruit_pct    = st.slider("Recruitment cost (% of annual salary)", 10, 40, 15) / 100
+            assess_pct     = st.slider("Assessment cost (% of annual salary)",   2,  15,  5) / 100
+            onboard_junior = st.slider("Onboarding cost — junior (% of annual salary)", 5, 25, 10) / 100
+            onboard_senior = st.slider("Onboarding cost — senior (% of annual salary)", 5, 25, 15) / 100
         with col2:
-            rampup_months  = st.slider("Productivity ramp-up (months)",  1, 12, 3)
+            rampup_junior  = st.slider("Productivity ramp-up — junior (months)", 1, 12, 1)
+            rampup_mid     = st.slider("Productivity ramp-up — mid (months)",    1, 12, 3)
+            rampup_senior  = st.slider("Productivity ramp-up — senior (months)", 1, 12, 6)
             knowledge_mult = st.slider("Knowledge transfer multiplier",  0.1, 1.5, 0.5)
+            morale_pct     = st.slider("Morale impact (% productivity loss)", 5, 30, 15) / 100
+            morale_days    = st.slider("Morale impact duration (days)", 15, 90, 60)
             threshold_s1   = st.slider("Attrition risk threshold",       0.3, 0.8, 0.5, 0.05)
 
         hr = scored[scored['Attrition_Probability'] >= threshold_s1]
-        if len(hr) > 0 and 'MonthlyIncome' in hr.columns:
-            total = (
-                (hr['MonthlyIncome']*12*recruit_pct) +
-                (hr['MonthlyIncome']*12*assess_pct) +
-                (hr['MonthlyIncome']*12*onboard_pct) +
-                (hr['MonthlyIncome']*rampup_months) +
-                (hr['MonthlyIncome']*knowledge_mult)
-            ).sum()
+
+        def role_level(job_level):
+            if job_level <= 1: return 'junior'
+            elif job_level <= 3: return 'mid'
+            else: return 'senior'
+
+        rampup_map  = {'junior': rampup_junior, 'mid': rampup_mid, 'senior': rampup_senior}
+        onboard_map = {'junior': onboard_junior, 'mid': onboard_junior, 'senior': onboard_senior}
+
+        total = 0.0
+        if len(hr) > 0 and 'MonthlyIncome' in hr.columns and 'JobLevel' in hr.columns:
+            levels = hr['JobLevel'].apply(role_level)
+            rampup_months_per_row = levels.map(rampup_map)
+            onboard_pct_per_row   = levels.map(onboard_map)
+
+            recruitment_cost  = (hr['MonthlyIncome'] * 12 * recruit_pct).sum()
+            assessment_cost   = (hr['MonthlyIncome'] * 12 * assess_pct).sum()
+            onboarding_cost   = (hr['MonthlyIncome'] * 12 * onboard_pct_per_row).sum()
+            productivity_cost = (hr['MonthlyIncome'] * rampup_months_per_row).sum()
+            knowledge_cost    = (hr['MonthlyIncome'] * knowledge_mult).sum()
+            morale_cost       = (hr['MonthlyIncome'] * morale_pct * (morale_days / 30)).sum()
+
+            total = (recruitment_cost + assessment_cost + onboarding_cost +
+                     productivity_cost + knowledge_cost + morale_cost)
+
             col1, col2, col3 = st.columns(3)
             col1.metric("High-risk headcount", len(hr))
             col2.metric("Total estimated cost", f"${total:,.0f}")
-            col3.metric("Average per person",   f"${total/len(hr):,.0f}")
+            col3.metric("Average per person",   f"${total/len(hr):,.0f}" if len(hr) else "$0")
+
+            with st.expander("Cost breakdown"):
+                st.markdown(f"""
+- Recruitment: ${recruitment_cost:,.0f}
+- Assessment: ${assessment_cost:,.0f}
+- Onboarding: ${onboarding_cost:,.0f}
+- Productivity ramp-up: ${productivity_cost:,.0f}
+- Knowledge transfer: ${knowledge_cost:,.0f}
+- Morale impact: ${morale_cost:,.0f}
+""")
         else:
-            st.info("Adjust threshold or check MonthlyIncome is in the scored dataset.")
+            st.info("Adjust threshold or check MonthlyIncome/JobLevel are in the scored dataset.")
 
     with tab2:
         st.markdown("### Planned Reduction-in-Force Simulation")
-        rif_pct      = st.slider("Target headcount reduction (%)", 1, 30, 10) / 100
-        sev_wks      = st.slider("Severance weeks per year of service", 1, 6, 2)
-        n_cut        = max(1, int(len(scored) * rif_pct))
+        rif_pct   = st.slider("Target headcount reduction (%)", 1, 30, 10) / 100
+        sev_wks   = st.slider("Severance weeks per year of service", 1, 6, 2)
+        n_cut     = max(1, int(len(scored) * rif_pct))
         st.metric("Employees affected", n_cut)
+
+        rif_total = 0.0
         if 'MonthlyIncome' in scored.columns and 'YearsAtCompany' in scored.columns:
-            sample       = scored.nsmallest(n_cut, 'Attrition_Probability')
-            severance    = (sample['MonthlyIncome'] * sample['YearsAtCompany'] * sev_wks / 4).sum()
-            knowledge    = (sample['MonthlyIncome'] * 0.5).sum()
-            morale       = (sample['MonthlyIncome'] * 0.15 * 2).sum()
-            rif_total    = severance + knowledge + morale
+            sample    = scored.nsmallest(n_cut, 'Attrition_Probability')
+            severance = (sample['MonthlyIncome'] * sample['YearsAtCompany'] * sev_wks / 4).sum()
+            knowledge = (sample['MonthlyIncome'] * 0.5).sum()
+            morale    = (sample['MonthlyIncome'] * 0.15 * 2).sum()
+            rif_total = severance + knowledge + morale
+
             col1, col2, col3 = st.columns(3)
             col1.metric("Total RIF cost",   f"${rif_total:,.0f}")
             col2.metric("Severance",         f"${severance:,.0f}")
@@ -183,26 +218,21 @@ elif page == "💰 Module 2 — Cost Simulator":
 
     with tab3:
         st.markdown("### Combined Risk Scenario")
-        try:
-            s1 = float(cost_summary['scenario_1_total'].values[0])
-            s2 = float(cost_summary['scenario_2_total'].values[0])
-            s3 = s1 + s2
-            df_s = pd.DataFrame({
-                'Scenario': ['Voluntary Attrition','Planned RIF','Combined Total'],
-                'Cost':     [s1, s2, s3]
-            })
-            fig = px.bar(df_s, x='Scenario', y='Cost',
-                         color='Scenario',
-                         color_discrete_sequence=['#4472C4','#ED7D31','#C00000'],
-                         title="Total Workforce Cost Exposure by Scenario")
-            fig.update_layout(showlegend=False)
-            st.plotly_chart(fig, use_container_width=True)
-            col1, col2, col3 = st.columns(3)
-            col1.metric("Voluntary attrition", f"${s1:,.0f}")
-            col2.metric("Planned RIF",          f"${s2:,.0f}")
-            col3.metric("Combined total",        f"${s3:,.0f}")
-        except:
-            st.info("Run Colab notebook Section 5 to generate cost simulation results.")
+        s3 = total + rif_total
+        df_s = pd.DataFrame({
+            'Scenario': ['Voluntary Attrition','Planned RIF','Combined Total'],
+            'Cost':     [total, rif_total, s3]
+        })
+        fig = px.bar(df_s, x='Scenario', y='Cost',
+                     color='Scenario',
+                     color_discrete_sequence=['#4472C4','#ED7D31','#C00000'],
+                     title="Total Workforce Cost Exposure by Scenario")
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig, use_container_width=True)
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Voluntary attrition", f"${total:,.0f}")
+        col2.metric("Planned RIF",          f"${rif_total:,.0f}")
+        col3.metric("Combined total",        f"${s3:,.0f}")
 
 # ══════════════════════════════════════════════════════════════════════
 elif page == "🤖 Module 3 — AI Displacement":
