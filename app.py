@@ -135,7 +135,7 @@ elif page == "💰 Module 2 — Cost Simulator":
     ])
 
     with tab1:
-        st.markdown("### Voluntary Attrition Cost Projection")
+        st.markdown("### Voluntary Attrition Cost Simulation")
         st.markdown("Estimates total replacement cost for employees flagged as high attrition risk.")
         col1, col2 = st.columns(2)
         with col1:
@@ -181,7 +181,7 @@ elif page == "💰 Module 2 — Cost Simulator":
             col1, col2, col3 = st.columns(3)
             col1.metric("High-risk headcount", len(hr))
             col2.metric("Total estimated cost", f"${total:,.0f}")
-            col3.metric("Average per person",   f"${total/len(hr):,.0f}" if len(hr) else "$0")
+            col3.metric("Average Cost per Departure",   f"${total/len(hr):,.0f}" if len(hr) else "$0")
 
             with st.expander("Cost breakdown"):
                 st.markdown(f"""
