@@ -67,7 +67,7 @@ if page == "📊 Overview":
 # ══════════════════════════════════════════════════════════════════════
 elif page == "🔮 Module 1 — Attrition Risk":
     st.title("🔮 Module 1 — Attrition Risk Prediction")
-    st.markdown("XGBoost classifier with SHAP-based explainability for employee attrition prediction.")
+    st.markdown("Explainable XGBoost model for employee attrition prediction and workforce decision support.")
     st.markdown("---")
 
     threshold = st.slider("Risk threshold", 0.1, 0.9, 0.5, 0.05)
