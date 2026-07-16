@@ -67,7 +67,7 @@ if page == "📊 Overview":
 # ══════════════════════════════════════════════════════════════════════
 elif page == "🔮 Module 1 — Attrition Risk":
     st.title("🔮 Module 1 — Attrition Risk Prediction")
-    st.markdown("XGBoost classifier with SHAP explainability. Target AUC ≥ 0.80 (Objective 1).")
+    st.markdown("XGBoost classifier with SHAP-based explainability for employee attrition prediction.")
     st.markdown("---")
 
     threshold = st.slider("Risk threshold", 0.1, 0.9, 0.5, 0.05)
@@ -76,8 +76,7 @@ elif page == "🔮 Module 1 — Attrition Risk":
     col1, col2, col3 = st.columns(3)
     col1.metric("High-risk employees", len(high_risk))
     col2.metric("% of workforce", f"{len(high_risk)/len(scored)*100:.1f}%")
-    col3.metric("Avg risk probability", f"{scored['Attrition_Probability'].mean():.3f}")
-
+    col3.metric("Average Risk",f"{scored['Attrition_Probability'].mean():.1%}")
     col1, col2 = st.columns(2)
     with col1:
         risk_counts = scored['Risk_Tier'].value_counts().reset_index()
