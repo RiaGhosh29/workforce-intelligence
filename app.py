@@ -125,7 +125,7 @@ elif page == "🔮 Module 1 — Attrition Risk":
 # ══════════════════════════════════════════════════════════════════════
 elif page == "💰 Module 2 — Cost Simulator":
     st.title("💰 Module 2 — Workforce Cost Simulator")
-    st.markdown("Parameterised financial engine grounded in Cascio (2006) and SHRM (2022) benchmarks.")
+    st.markdown("Interactive workforce cost simulation for estimating employee attrition and restructuring costs.")
     st.markdown("---")
 
     tab1, tab2, tab3 = st.tabs([
