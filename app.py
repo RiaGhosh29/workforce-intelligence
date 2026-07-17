@@ -345,6 +345,6 @@ elif page == "🎯 Module 4 — 2×2 Matrix":
         st.markdown(f"**{q}** — {n} employees ({pct:.1f}%) — {moscow} — {action}")
 
 st.markdown("---")
-st.caption("AI-Assisted Workforce Intelligence | Ria Ghosh & Izabella Martirosyan | "
+st.caption("AI-Assisted Workforce Intelligence | Ria Ghosh & Izabela Martirosyan | "
            "Universidad Europea de Madrid 2025–26 | "
            "Supervisor: Prof. Ximena Alejandra Valente Hervier")
