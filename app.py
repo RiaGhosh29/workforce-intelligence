@@ -28,7 +28,7 @@ scored, displacement, cost_summary       = load_data()
 
 # ── Sidebar ───────────────────────────────────────────────────────────
 st.sidebar.title("🧠 AI Workforce Intelligence")
-st.sidebar.markdown("Ria Ghosh & Izabella Martirosyan  \nUniversidad Europea de Madrid 2025–26")
+st.sidebar.markdown("Ria Ghosh & Izabela Martirosyan  \nUniversidad Europea de Madrid 2025–26")
 st.sidebar.markdown("---")
 page = st.sidebar.radio("Navigate", [
     "📊 Overview",
