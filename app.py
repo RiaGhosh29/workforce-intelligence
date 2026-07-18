@@ -336,7 +336,7 @@ elif page == "🎯 Module 4 — 2×2 Matrix":
     actions = {
         'Double Exposure'        : ('🔴 Must-have',    'Immediate combined retention and reskilling action'),
         'Retention Priority'     : ('🟠 Should-have',  'Retention investment — compensation review, career development'),
-        'Restructuring Candidate': ('🟡 Should-have',  'Reskilling — longer-horizon capability redirection'),
+        'Reskilling Priority': ('🟡 Should-have',  'Reskilling — longer-horizon capability redirection'),
         'Stable'                 : ('🔵 Could-have',   'Monitor at next quarterly planning cycle'),
     }
     for q, (moscow, action) in actions.items():
