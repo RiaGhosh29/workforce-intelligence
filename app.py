@@ -299,7 +299,7 @@ elif page == "🎯 Module 4 — 2×2 Matrix":
         hd = row['AI_Displacement_Score'] >= dt
         if ha and hd:   return 'Double Exposure'
         elif ha:         return 'Retention Priority'
-        elif hd:         return 'Restructuring Candidate'
+        elif hd:         return 'Reskilling Priority'
         else:            return 'Stable'
 
     plot_df['Quadrant'] = plot_df.apply(quadrant, axis=1)
@@ -307,7 +307,7 @@ elif page == "🎯 Module 4 — 2×2 Matrix":
     color_map = {
         'Double Exposure'        : '#C00000',
         'Retention Priority'     : '#ED7D31',
-        'Restructuring Candidate': '#FFC000',
+        'Reskilling Priority': '#FFC000',
         'Stable'                 : '#4472C4'
     }
 
