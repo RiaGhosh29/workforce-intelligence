@@ -9,11 +9,14 @@ The deployed application is available at: https://workforce-intelligence.streaml
 
 ## Analytical notebook
 The exploratory data analysis and model training process is documented in a separate notebook:
-`AI_Workforce_Intelligence_Analysis.ipynb` — [link to Colab notebook]
+`AI_Workforce_Intelligence_Analysis.ipynb` — [Open in Colab](https://colab.research.google.com/drive/10pPYOC33Jj_6XcA9DQBL9bhxKlCHB0hk)
+
+## Data sources
+- **IBM HR Analytics Employee Attrition & Performance** — a publicly available benchmark HR dataset used to train and evaluate the attrition prediction model, and as the basis for the workforce cost simulation and AI displacement scoring modules.
+- **O*NET occupational database** — used to map IBM job roles to their nearest O*NET-SOC occupational equivalents, providing the automation-probability and task-repetitiveness inputs used by the AI displacement scoring framework.
 
 ## Model development process
 The attrition model was developed by benchmarking baseline classifiers, selecting XGBoost as the final model, and tuning it via cross-validated hyperparameter search. SHAP was used to generate global and local explainability outputs. The serialized model, preprocessing pipeline, and feature list are stored as `xgb_attrition_model.pkl`, `preprocessor_xgb.pkl`, and `feature_names.pkl` respectively, with precomputed SHAP values in `shap_values_test.npy`.
-
 
 ## Repository contents
 - `app.py` — Streamlit dashboard application (Overview, Attrition Risk, Cost Simulator, AI Displacement, and 2x2 Matrix pages)
